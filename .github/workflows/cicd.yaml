@@ -57,4 +57,4 @@ jobs:
           -H "Authorization: Bearer $(gcloud auth print-access-token)" \
           -F tags=test \
           -F content=@pipeline.yaml \
-          ${{ vars.REPO_URL}}
+          https://us-central1-kfp.pkg.dev/my-project-9420-464616/mlops
