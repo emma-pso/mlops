@@ -5,7 +5,7 @@ import kfp
 sys.path.append("src")
 
 PIPELIE_NAME = "The-Iris-Pipeline-v1"
-PIPELINE_ROOT = "gs://mlops-demo-youtube/pipeline_root"
+PIPELINE_ROOT = "gs://mlops_test_emma/iris_model_output"
 
 
 @kfp.dsl.pipeline(name=PIPELIE_NAME, pipeline_root=PIPELINE_ROOT)
