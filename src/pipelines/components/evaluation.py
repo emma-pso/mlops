@@ -7,8 +7,8 @@ from kfp.dsl import Dataset, Input, Metrics, Model, Output, component
     packages_to_install=[
         "pandas",
         "joblib",
-        "scikit-learn", # Add scikit-learn for accuracy_score
-        "kfp"           # Explicitly add kfp for good practice
+        "scikit-learn",  # Add scikit-learn for accuracy_score
+        "kfp",  # Explicitly add kfp for good practice
     ],
 )
 def choose_best_model(

@@ -3,12 +3,7 @@ from kfp.dsl import Dataset, Output, component
 
 @component(
     base_image="gcr.io/deeplearning-platform-release/tf-cpu.2-11:latest",
-    packages_to_install=[
-        "pandas",
-        "google-cloud-bigquery",
-        "scikit-learn",
-        "kfp"
-    ],
+    packages_to_install=["pandas", "google-cloud-bigquery", "scikit-learn", "kfp"],
 )
 def load_data(
     project_id: str,
@@ -45,10 +40,10 @@ def load_data(
 
     # Recombine features and target for saving
     train_df = X_train.copy()
-    train_df['Species'] = y_train
-    
+    train_df["Species"] = y_train
+
     test_df = X_test.copy()
-    test_df['Species'] = y_test
+    test_df["Species"] = y_test
 
     train_df.to_csv(train_dataset.path, index=False)
     test_df.to_csv(test_dataset.path, index=False)
