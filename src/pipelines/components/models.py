@@ -45,10 +45,8 @@ def decision_tree(
     # Update the base image for a compatible Python version
     base_image="gcr.io/deeplearning-platform-release/tf-cpu.2-11:latest",
     packages_to_install=[
-        "pandas",  
- 
-       "joblib",
-     
+        "pandas",
+        "joblib",
         "scikit-learn",  # Add scikit-learn for accuracy_score
         "kfp",  # Explicitly add kfp for good practice
     ],
