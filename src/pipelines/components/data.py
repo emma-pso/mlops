@@ -2,10 +2,12 @@ from kfp.dsl import Dataset, Output, component
 
 
 @component(
-    base_image="gcr.io/deeplearning-platform-release/tf2-cpu.2-6:latest",
+    base_image="gcr.io/deeplearning-platform-release/tf-cpu.2-11:latest",
     packages_to_install=[
         "pandas",
         "google-cloud-bigquery",
+        "scikit-learn",
+        "kfp"
     ],
 )
 def load_data(
@@ -19,19 +21,11 @@ def load_data(
     from google.cloud import bigquery
     from sklearn.model_selection import train_test_split
 
-    client = bigquery.Client()
+    client = bigquery.Client(project=project_id)
 
-    dataset_ref = bigquery.DatasetReference(project_id, bq_dataset)
-    table_ref = dataset_ref.table(bq_table)
-    table = bigquery.Table(table_ref)
-    iterable_table = client.list_rows(table).to_dataframe_iterable()
-
-    dfs = []
-    for row in iterable_table:
-        dfs.append(row)
-
-    df = pd.concat(dfs, ignore_index=True)
-    del dfs
+    # More direct way to query BigQuery to a pandas DataFrame
+    query = f"SELECT * FROM `{project_id}.{bq_dataset}.{bq_table}`"
+    df = client.query(query).to_dataframe()
 
     df["Species"].replace(
         {
@@ -49,8 +43,12 @@ def load_data(
         random_state=42,
     )
 
-    X_train["Species"] = y_train
-    X_test["Species"] = y_test
+    # Recombine features and target for saving
+    train_df = X_train.copy()
+    train_df['Species'] = y_train
+    
+    test_df = X_test.copy()
+    test_df['Species'] = y_test
 
-    X_train.to_csv(f"{train_dataset.path}", index=False)
-    X_test.to_csv(f"{test_dataset.path}", index=False)
+    train_df.to_csv(train_dataset.path, index=False)
+    test_df.to_csv(test_dataset.path, index=False)
