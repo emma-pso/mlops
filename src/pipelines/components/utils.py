@@ -12,10 +12,10 @@ def upload_model(
 
     from google.cloud import aiplatform
 
-    aiplatform.init(project="gsd-ai-mx-ferneutron", location="us-central1")
+    aiplatform.init(project="my-project-9420-464616", location="us-central1")
 
     aiplatform.Model.upload_scikit_learn_model_file(
         model_file_path=model.path,
         display_name="IrisModelv3",
-        project="gsd-ai-mx-ferneutron",
+        project="my-project-9420-464616",
     )
