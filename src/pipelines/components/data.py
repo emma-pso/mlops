@@ -33,7 +33,7 @@ def load_data(
     df = pd.concat(dfs, ignore_index=True)
     del dfs
 
-    df["Species"].replace(
+    df["species"].replace(
         {
             "Iris-versicolor": 0,
             "Iris-virginica": 1,
@@ -43,14 +43,14 @@ def load_data(
     )
 
     X_train, X_test, y_train, y_test = train_test_split(
-        df.drop("Species", axis=1),
-        df["Species"],
+        df.drop("species", axis=1),
+        df["species"],
         test_size=0.2,
         random_state=42,
     )
 
-    X_train["Species"] = y_train
-    X_test["Species"] = y_test
+    X_train["species"] = y_train
+    X_test["species"] = y_test
 
     X_train.to_csv(f"{train_dataset.path}", index=False)
     X_test.to_csv(f"{test_dataset.path}", index=False)
