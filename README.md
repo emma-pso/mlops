@@ -15,7 +15,7 @@ In order to adjust this repository to your use case, I recommend you follow the 
 
 ## 2. Usage
 
-For new projects enable the APIS using the provided shell script
+For new projects enable the APIS using the provided shell script 
 
 First, in GCP you will need to create a [Workload Identity Provider](https://cloud.google.com/iam/docs/workload-identity-federation) which will enable the connection between GitHub and GCP.
 
