@@ -10,11 +10,18 @@ variable "project_id" {
   default     = "ml-terraform-465317"
 }
 
+variable "gcs_bucket_location" {
+  description = "The location for the GCS bucket."
+  type        = string
+  default     = "US-CENTRAL1"
+}
+
 locals {
   service_account_id   = "mlops-demo"
   service_account_name = "MLOps Demo Service Account"
   github_owner         = "emma-pso"
   repo_name            = "mlops"
+  bucket_name          = "mlops_test_emma-${var.project_id}" # Bucket name construction
   roles = [
     "roles/artifactregistry.writer",
     "roles/bigquery.readSessionUser",
@@ -55,6 +62,18 @@ resource "google_iam_workload_identity_pool_provider" "github_provider" {
   }
   attribute_condition = "attribute.repository == '${local.github_owner}/${local.repo_name}'"
   issuer_uri          = "https://token.actions.githubusercontent.com"
+}
+# --------------------------------------------------------------------------------------------------
+# CREATE THE GCS BUCKET
+# --------------------------------------------------------------------------------------------------
+
+resource "google_storage_bucket" "mlops_bucket" {
+  name          = local.bucket_name
+  project       = var.project_id
+  location      = var.gcs_bucket_location
+  force_destroy = true # Set to false for production environments
+
+  uniform_bucket_level_access = true
 }
 
 # --------------------------------------------------------------------------------------------------
