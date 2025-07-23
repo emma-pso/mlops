@@ -39,7 +39,7 @@ locals {
 }
 
 # --------------------------------------------------------------------------------------------------
-# CREATE THE WORKLOAD IDENTITY POOL AND OIDC PROVIDER.
+# CREATE THE WORKLOAD IDENTITY POOL AND OIDC PROVIDER
 # --------------------------------------------------------------------------------------------------
 
 resource "google_iam_workload_identity_pool" "github_pool" {
